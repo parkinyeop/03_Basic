@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
 
     }
 
-   
+
 
     private void OnDisable()
     {
@@ -50,15 +50,13 @@ public class Player : MonoBehaviour
 
     private void OnJumpInput(InputAction.CallbackContext _)
     {
-        //Jump();
-        rigid.AddForce(100 * Vector3.up, ForceMode.Impulse);
-        //Debug.Log("Jump");
+        Jump();
     }
 
     private void FixedUpdate()
     {
         Move();
-        Rotate();        
+        Rotate();
     }
 
     private void Move()
@@ -67,13 +65,13 @@ public class Player : MonoBehaviour
     }
     void Rotate()
     {
-        
-        rigid.MoveRotation(rigid.rotation * Quaternion.AngleAxis(rotateSpeed * rotateDir * Time.fixedDeltaTime , transform.up));
+
+        rigid.MoveRotation(rigid.rotation * Quaternion.AngleAxis(rotateSpeed * rotateDir * Time.fixedDeltaTime, transform.up));
         //rb.MoveRotation(rb.rotation * Quaternion.Euler(0,rotateDir*rotateSpeed*Time.deltaTime,0));
-        
+
     }
     void Jump()
     {
-        rigid.AddForce(jumpPower*transform.up, ForceMode.Impulse);
+        rigid.AddForce(jumpPower * transform.up, ForceMode.Impulse);
     }
 }
