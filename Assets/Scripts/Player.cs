@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     float moveDir = default;
     float rotateDir = default;
 
+    bool isJump = false;
+
+
     PlayerInputAction inputAction;              // PlayerInputAction타입의 변수 선언
     Rigidbody rigid;
 
@@ -72,6 +75,15 @@ public class Player : MonoBehaviour
     }
     void Jump()
     {
-        rigid.AddForce(jumpPower * transform.up, ForceMode.Impulse);
+        if (!isJump)
+        {
+            rigid.AddForce(jumpPower * transform.up, ForceMode.Impulse);
+        }
+        isJump = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        isJump = false;
     }
 }
