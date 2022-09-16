@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -13,16 +14,19 @@ public class Player : MonoBehaviour
     float moveDir = default;
     float rotateDir = default;
 
-    bool isJump = false;
+    public bool isJump = false;
+    public bool isMove = false;
 
 
     PlayerInputAction inputAction;              // PlayerInputAction타입의 변수 선언
     Rigidbody rigid;
+    Animator anim;
 
     private void Awake()
     {
         inputAction = new PlayerInputAction();  //인스턴스 생성
         rigid = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
 
     }
     private void OnEnable()
@@ -46,9 +50,13 @@ public class Player : MonoBehaviour
 
     private void OnMoveInput(InputAction.CallbackContext context)
     {
+
         Vector2 input = context.ReadValue<Vector2>();
+
         moveDir = input.y;
         rotateDir = input.x;
+
+        anim.SetBool("isWalk", !context.canceled); //이동키의 입력 상태를 체크
     }
 
     private void OnJumpInput(InputAction.CallbackContext _)
@@ -84,6 +92,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        isJump = false;
+        if (collision.gameObject.tag == "Ground" || transform.position.y <= 0)
+            isJump = false;
     }
 }
