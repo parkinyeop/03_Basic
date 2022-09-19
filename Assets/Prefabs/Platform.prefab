@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1829399948872699133}
   - component: {fileID: 1829399948872699120}
   - component: {fileID: 1829399948872699123}
-  - component: {fileID: 1829399948872699122}
+  - component: {fileID: 8976803602251564359}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1829399948872699122
-SphereCollider:
+--- !u!65 &8976803602251564359
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -95,7 +95,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1829399949113356377
 GameObject:
@@ -137,7 +137,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1829399949113356377}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -239,7 +239,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1829399950136476771}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.0000001, y: 2, z: 1.0000002}
@@ -260,6 +260,7 @@ MonoBehaviour:
   moveSpeed: 5
   isPlatformMoveOn: 0
   isPlatformTop: 0
+  isPlayerOn: 0
 --- !u!54 &1829399950136476773
 Rigidbody:
   m_ObjectHideFlags: 0
