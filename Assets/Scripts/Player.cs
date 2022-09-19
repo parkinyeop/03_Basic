@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     PlayerInputAction inputAction;              // PlayerInputAction타입의 변수 선언
     Rigidbody rigid;
     Animator anim;
+    Platform plat;
 
     private void Awake()
     {
@@ -29,16 +30,27 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
 
     }
+
+    private void Start()
+    {
+        GameObject platform = GameObject.Find("Platform");
+        if (platform != null)
+            plat = platform.GetComponent<Platform>();
+    }
     private void OnEnable()
     {
         inputAction.Player.Enable();
         inputAction.Player.Move.performed += OnMoveInput;
         inputAction.Player.Move.canceled += OnMoveInput;
         inputAction.Player.Jump.performed += OnJumpInput;
-
+        inputAction.Player.PlatformMove.performed += OnPlatformMove;
+        inputAction.Player.PlatformMove.canceled += OnPlatformMove;
     }
 
-
+    private void OnPlatformMove(InputAction.CallbackContext obj)
+    {
+        plat.isPlatformMoveOn = true;
+    }
 
     private void OnDisable()
     {
@@ -46,8 +58,9 @@ public class Player : MonoBehaviour
         inputAction.Player.Move.performed -= OnMoveInput;
         inputAction.Player.Move.canceled -= OnMoveInput;
         inputAction.Player.Jump.performed -= OnJumpInput;
+        inputAction.Player.PlatformMove.performed -= OnPlatformMove;
+        inputAction.Player.PlatformMove.canceled -= OnPlatformMove;
     }
-
     private void OnMoveInput(InputAction.CallbackContext context)
     {
 

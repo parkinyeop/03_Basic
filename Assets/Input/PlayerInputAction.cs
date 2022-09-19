@@ -44,6 +44,15 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PlatformMove"",
+                    ""type"": ""Button"",
+                    ""id"": ""6bce2b39-4f54-4d64-a58e-aa5fe51802d6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -112,6 +121,17 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""89069938-4358-416a-bfdb-d3c8408575c6"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlatformMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -139,6 +159,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_PlatformMove = m_Player.FindAction("PlatformMove", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -200,12 +221,14 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_PlatformMove;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
         public PlayerActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @PlatformMove => m_Wrapper.m_Player_PlatformMove;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -221,6 +244,9 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @PlatformMove.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlatformMove;
+                @PlatformMove.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlatformMove;
+                @PlatformMove.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlatformMove;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -231,6 +257,9 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @PlatformMove.started += instance.OnPlatformMove;
+                @PlatformMove.performed += instance.OnPlatformMove;
+                @PlatformMove.canceled += instance.OnPlatformMove;
             }
         }
     }
@@ -248,5 +277,6 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnPlatformMove(InputAction.CallbackContext context);
     }
 }

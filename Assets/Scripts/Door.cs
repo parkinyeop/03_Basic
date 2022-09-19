@@ -4,30 +4,52 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    Rigidbody rigid;
+    //Rigidbody rigid;
     Animator anim;
+    public bool isDoorCheckOn = false;
+    public bool isBackDoorCheckOn= false;
 
     private void Awake()
     {
-        rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-           StartCoroutine(OpenDoor());
-        }
-        StopCoroutine(OpenDoor());
 
+    private void FixedUpdate()
+    {
+        if (isDoorCheckOn)
+            FrontOpen();
+
+        if(isBackDoorCheckOn)
+            BackOpen();
     }
 
-    IEnumerator OpenDoor()
+    public void FrontOpen()
+    {
+        StartCoroutine(OpenFrontDoor());
+    }
+
+    void BackOpen()
+    {
+        StartCoroutine (OpenBackDoor());
+    }
+    IEnumerator OpenFrontDoor()
     {
         anim.SetBool("isOpen", true);
         yield return new WaitForSeconds(0.1f);
 
         anim.SetBool("isOpen", false);
+        isDoorCheckOn=false;
+
+    }
+
+    IEnumerator OpenBackDoor()
+    {
+        anim.SetBool("isBackOpen", true);
+        yield return new WaitForSeconds(0.1f);
+
+        anim.SetBool("isBackOpen", false);
+        isBackDoorCheckOn = false;
+
 
     }
 }
