@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     public bool isJump = false;
     public bool isMove = false;
 
+    Vector3 usePosition = Vector3.zero;
+    float useRadius = 1.0f;
 
     PlayerInputAction inputAction;              // PlayerInputAction타입의 변수 선언
     Rigidbody rigid;
@@ -108,5 +110,10 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground" || transform.position.y <= 0)
             isJump = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position + usePosition, useRadius);
     }
 }
