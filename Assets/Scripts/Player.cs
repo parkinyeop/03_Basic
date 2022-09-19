@@ -47,9 +47,10 @@ public class Player : MonoBehaviour
         inputAction.Player.PlatformMove.canceled += OnPlatformMove;
     }
 
-    private void OnPlatformMove(InputAction.CallbackContext obj)
+    private void OnPlatformMove(InputAction.CallbackContext _)
     {
         plat.isPlatformMoveOn = true;
+        anim.SetTrigger("Use");
     }
 
     private void OnDisable()

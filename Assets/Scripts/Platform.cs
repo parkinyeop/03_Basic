@@ -12,6 +12,7 @@ public class Platform : MonoBehaviour
     Vector3 originPosition;
     public bool isPlatformMoveOn = false;
     public bool isPlatformTop = false;
+    public bool isPlayerOn = false;
     
 
 
@@ -43,14 +44,24 @@ public class Platform : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && isPlatformMoveOn && !isPlatformTop)
+        if (other.gameObject.CompareTag("Player") && isPlatformMoveOn && !isPlatformTop && isPlayerOn)
         {
             StartCoroutine(OnMoveup());
         }
-        else if (other.gameObject.CompareTag("Player") && isPlatformMoveOn && isPlatformTop)
+        else if (other.gameObject.CompareTag("Player") && isPlatformMoveOn && isPlatformTop && isPlayerOn)
         {
             StartCoroutine(OnMoveDown());
         }
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        isPlayerOn = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        isPlayerOn=false;
     }
 }
